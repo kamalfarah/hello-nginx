@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hello-nginx
+  namespace: demo
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: hello-nginx
+  template:
+    metadata:
+      labels:
+        app: hello-nginx
+    spec:
+      containers:
+      - name: hello-nginx
+        image: kamalfarah/hello-nginx:latest
+        ports:
+        - containerPort: 80
+        readinessProbe:
+          httpGet: { path: "/", port: 80 }
+          initialDelaySeconds: 3
+          periodSeconds: 5
+        livenessProbe:
+          httpGet: { path: "/", port: 80 }
+          initialDelaySeconds: 10
+          periodSeconds: 10
+        resources:
+          requests:
+            cpu: 50m
+            memory: 64Mi
