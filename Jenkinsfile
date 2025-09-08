@@ -44,7 +44,7 @@ pipeline {
           sh '''
             set -e
             # Apply base manifests (if first time)
-            kubectl -n demo apply -f k8s/ --validate=false
+            kubectl -n demo apply -f k8s/
             
 
             # Update the running deployment to the new exact image tag
