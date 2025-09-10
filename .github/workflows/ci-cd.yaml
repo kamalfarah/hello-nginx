@@ -27,7 +27,7 @@ jobs:
         with:
           context: .
           push: true
-          tags: ${{ secrets.DOCKER_HUB_USERNAME }}/hello-nginx:latest
+          tags: ${{ secrets.DOCKER_HUB_USERNAME }}/hello-nginx:10.1
 
       # Set up kubectl
       - name: Set up kubectl
