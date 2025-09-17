@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: hello-nginx
-  namespace: default
+  namespace: secondary
   
 spec:
   replicas: 1
@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: hello-nginx
-        image: kamalfarah/hello-nginx:10.1
+        image: kamalfarah/hello-nginx:10.2
         ports:
         - containerPort: 80
         readinessProbe:
