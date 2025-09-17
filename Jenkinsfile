@@ -2,9 +2,8 @@ pipeline {
     agent any
 
     environment {
-        DOCKER_HUB_USERNAME = credentials('docker-hub-username')  // Jenkins credential ID
-        DOCKER_HUB_PASS     = credentials('docker-hub-pass')      // Jenkins credential ID
-        IMAGE               = "${DOCKER_HUB_USERNAME}/hello-nginx:10.2"
+        DOCKER_CREDS = credentials('dockerhub-cred')  // must match your Jenkins credential ID
+        IMAGE = "kamalfarah/hello-nginx:10.2"
     }
 
     stages {
@@ -16,7 +15,7 @@ pipeline {
 
         stage('Login to Docker Hub') {
             steps {
-                sh 'echo $DOCKER_HUB_PASS | docker login -u $DOCKER_HUB_USERNAME --password-stdin'
+                sh 'echo $DOCKER_CREDS_PSW | docker login -u $DOCKER_CREDS_USR --password-stdin'
             }
         }
 
@@ -35,7 +34,10 @@ pipeline {
 
     post {
         always {
-            sh 'docker logout'
+            script {
+                // Avoid "MissingContextVariableException"
+                sh 'docker logout || true'
+            }
         }
     }
 }
