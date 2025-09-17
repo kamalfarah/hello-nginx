@@ -2,32 +2,39 @@ pipeline {
     agent any
 
     environment {
-        DOCKER_CREDS = credentials('dockerhub-cred')  // must match your Jenkins credential ID
-        IMAGE = "kamalfarah/hello-nginx:10.2"
+        DOCKER_IMAGE = "kamalfarah/hello-nginx:10.2"
     }
 
     stages {
-        stage('Checkout source code') {
+        stage('Checkout') {
             steps {
-                checkout scm
+                git branch: 'main',
+                    url: 'git@github.com:kamalfarah/hello-nginx.git',
+                    credentialsId: 'github-ssh-key'   // <-- Add this credential in Jenkins
             }
         }
 
         stage('Login to Docker Hub') {
             steps {
-                sh 'echo $DOCKER_CREDS_PSW | docker login -u $DOCKER_CREDS_USR --password-stdin'
+                withCredentials([usernamePassword(credentialsId: 'dockerhub-cred',
+                                                  usernameVariable: 'DOCKER_USER',
+                                                  passwordVariable: 'DOCKER_PASS')]) {
+                    sh """
+                        echo "$DOCKER_PASS" | docker login -u "$DOCKER_USER" --password-stdin
+                    """
+                }
             }
         }
 
         stage('Build Docker image') {
             steps {
-                sh 'docker build -t $IMAGE .'
+                sh "docker build -t $DOCKER_IMAGE ."
             }
         }
 
         stage('Push Docker image') {
             steps {
-                sh 'docker push $IMAGE'
+                sh "docker push $DOCKER_IMAGE"
             }
         }
     }
@@ -35,9 +42,11 @@ pipeline {
     post {
         always {
             script {
-                // Avoid "MissingContextVariableException"
-                sh 'docker logout || true'
+                node {
+                    sh 'docker logout || true'
+                }
             }
         }
     }
 }
+
