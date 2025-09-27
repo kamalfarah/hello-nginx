@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: hello-nginx
-        image: kamalfarah/hello-nginx:10.2
+        image: kamalfarah/hello-nginx:${{ github.run_number }}
         ports:
         - containerPort: 80
         readinessProbe:
