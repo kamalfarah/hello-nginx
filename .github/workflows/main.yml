@@ -45,5 +45,7 @@ jobs:
       # Deploy to Kubernetes
       - name: Deploy to Kubernetes
         run: |
+          kubectl set image deployment/hello-nginx hello-nginx=${{ secrets.DOCKER_HUB_USERNAME }}/hello-nginx:${{ github.run_number }}
+
           kubectl apply -f k8s/
           kubectl rollout status deployment hello-nginx -n default
