@@ -43,9 +43,14 @@ jobs:
 
 
       # Deploy to Kubernetes
+      - name: Inject image tag into manifest
+        run: |
+          sed "s|IMAGE_TAG|${{ github.run_number }}|g" k8s/deployment.yaml > k8s/deployment.generated.yaml
       - name: Deploy to Kubernetes
         run: |
-          kubectl set image deployment/hello-nginx hello-nginx=${{ secrets.DOCKER_HUB_USERNAME }}/hello-nginx:${{ github.run_number }}
+          
 
-          kubectl apply -f k8s/
+
+          kubectl apply -f k8s/deployment.generated.yaml
+
           kubectl rollout status deployment hello-nginx -n default
