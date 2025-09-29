@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: hello-nginx
-        image: $DOCKER_IMAGE
+        image: kamalfarah/hello-nginx:17
         ports:
         - containerPort: 80
         readinessProbe:
