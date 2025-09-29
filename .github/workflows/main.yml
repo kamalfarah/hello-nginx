@@ -28,9 +28,9 @@ jobs:
           context: .
           push: true
           tags: ${{ secrets.DOCKER_HUB_USERNAME }}/hello-nginx:${{ github.run_number }}
-      - name: Replace image placeholder
-        run: |
-          sed -i "s|\$DOCKER_IMAGE|${{ secrets.DOCKER_HUB_USERNAME }}/hello-nginx:${{ github.run_number }}|g" k8s/deployment.yaml
+   #   - name: Replace image placeholder
+     #   run: |
+        #  sed -i "s|\$DOCKER_IMAGE|${{ secrets.DOCKER_HUB_USERNAME }}/hello-nginx:${{ github.run_number }}|g" k8s/deployment.yaml
 
 
       
