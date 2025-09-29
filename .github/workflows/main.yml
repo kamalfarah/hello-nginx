@@ -29,28 +29,24 @@ jobs:
           push: true
           tags: ${{ secrets.DOCKER_HUB_USERNAME }}/hello-nginx:${{ github.run_number }}
 
-      # Set up kubectl
-      #- name: Set up kubectl
-      #  uses: azure/setup-kubectl@v4
-      #  with:
-       #   version: 'latest'
+      
 
       # Configure kubeconfig
-      - name: Set KUBECONFIG
-        run: |
-          mkdir -p $HOME/.kube
-          echo "${{ secrets.KUBECONFIG }}" | base64 -d > $HOME/.kube/config
+    #  - name: Set KUBECONFIG
+     #   run: |
+      #    mkdir -p $HOME/.kube
+      #    echo "${{ secrets.KUBECONFIG }}" | base64 -d > $HOME/.kube/config
 
 
       # Deploy to Kubernetes
-      - name: Inject image tag into manifest
-        run: |
-          sed "s|IMAGE_TAG|${{ github.run_number }}|g" k8s/deployment.yaml > k8s/deployment.generated.yaml
-      - name: Deploy to Kubernetes
-        run: |
+   #   - name: Inject image tag into manifest
+     #   run: |
+     #     sed "s|IMAGE_TAG|${{ github.run_number }}|g" k8s/deployment.yaml > k8s/deployment.generated.yaml
+     # - name: Deploy to Kubernetes
+     #   run: |
           
 
 
-          kubectl apply -f k8s/deployment.generated.yaml
+      #    kubectl apply -f k8s/deployment.generated.yaml
 
-          kubectl rollout status deployment hello-nginx -n default
+   #       kubectl rollout status deployment hello-nginx -n default
