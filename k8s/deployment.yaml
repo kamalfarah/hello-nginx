@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: hello-nginx
-        image: kamalfarah/hello-nginx
+        image: kamalfarah/hello-nginx:21
         ports:
         - containerPort: 80
         readinessProbe:
