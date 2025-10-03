@@ -27,9 +27,8 @@ jobs:
         with:
           context: .
           push: true
-          tags: |
-            ${{ secrets.DOCKER_HUB_USERNAME }}/hello-nginx:${{ github.run_number }}
-            latest
+          tags: ${{ secrets.DOCKER_HUB_USERNAME }}/hello-nginx:${{ github.run_number }}
+            
           
    #   - name: Replace image placeholder
      #   run: |
