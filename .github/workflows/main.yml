@@ -28,8 +28,12 @@ jobs:
           context: .
           push: true
           tags: ${{ secrets.DOCKER_HUB_USERNAME }}/hello-nginx:${{ github.run_number }}
-            
-          
+      - name: Save image name
+        run: echo "IMAGE=kamalfarah/hello-nginx:${{ github.run_number }}" >> $GITHUB_ENV
+     
+      - name: Update deployment image
+        run: |
+          kubectl set image -n default deployment/hello-nginx hello-nginx=${{ env.IMAGE }} --record   
    #   - name: Replace image placeholder
      #   run: |
         #  sed -i "s|\$DOCKER_IMAGE|${{ secrets.DOCKER_HUB_USERNAME }}/hello-nginx:${{ github.run_number }}|g" k8s/deployment.yaml
