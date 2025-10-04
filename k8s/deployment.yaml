@@ -3,19 +3,7 @@ kind: Deployment
 metadata:
   name: hello-nginx
   namespace: default
-  annotations:
-    # Tell Image Updater which image to watch
-    argocd-image-updater.argoproj.io/image-list: hello-nginx=docker.io/kamalfarah/hello-nginx
-    
-    # Use newest-build strategy to pick highest number
-    argocd-image-updater.argoproj.io/hello-nginx.update-strategy: newest-build
-    
-    # Only match numeric tags (GitHub run numbers)
-    argocd-image-updater.argoproj.io/hello-nginx.allow-tags: regexp:^[0-9]+$
-    
-    # Write changes back to Git repo
-    argocd-image-updater.argoproj.io/write-back-method: git
-    argocd-image-updater.argoproj.io/git-branch: main
+ 
 spec:
   replicas: 1
   selector:
