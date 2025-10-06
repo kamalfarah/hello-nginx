@@ -3,6 +3,10 @@ kind: Deployment
 metadata:
   name: hello-nginx
   namespace: default
+  annotations:
+    argocd-image-updater.argoproj.io/image-list: hello-nginx=kamalfarah/hello-nginx
+    argocd-image-updater.argoproj.io/hello-nginx.update-strategy: latest
+
  
 spec:
   replicas: 1
