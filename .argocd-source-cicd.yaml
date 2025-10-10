@@ -1,0 +1,3 @@
+kustomize:
+  images:
+  - kamalfarah/hello-nginx:49
