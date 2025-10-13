@@ -1,3 +1,3 @@
 kustomize:
   images:
-  - kamalfarah/hello-nginx:66
+  - kamalfarah/hello-nginx:68
